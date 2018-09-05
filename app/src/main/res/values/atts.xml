@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ChooseLabelView">
+        <attr name="verticalSpacing" format="dimension" />
+        <attr name="horizontalSpacing" format="dimension" />
+        <attr name="isShowTitle" format="boolean" />
+        <attr name="isMoreSelect" format="boolean" />
+        <attr name="isBackSelect" format="boolean" />
+        <attr name="isAdaptive" format="boolean" />
+        <attr name="isShowUnlimited" format="boolean" />
+        <attr name="isSelectUnlimited" format="boolean" />
+        <attr name="unlimitedText" format="string" />
+        <attr name="titleTextSize" format="dimension" />
+        <attr name="tagTextSize" format="dimension" />
+        <attr name="tagWidth" format="dimension" />
+        <attr name="tagHeight" format="dimension" />
+        <attr name="tagPaddingTop" format="dimension" />
+        <attr name="tagPaddingLeft" format="dimension" />
+        <attr name="tagPaddingRight" format="dimension" />
+        <attr name="tagPaddingBottom" format="dimension" />
+        <attr name="titleText" format="string" />
+        <attr name="titleTextColor" format="color" />
+        <attr name="tagTextColor" format="color" />
+        <attr name="tagBackground" format="reference" />
+        <attr name="tagBackgroundSelect" format="reference" />
+        <attr name="tagTextColorSelect" format="color" />
+    </declare-styleable>
+</resources>
