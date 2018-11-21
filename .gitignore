@@ -1,7 +1,10 @@
-
 *.bin
+.gitignore
+.gradle/*
+.idea/*
+app/build/*
 *.lock
-.gradle/buildOutputCleanup/cache.properties
-.idea/caches/build_file_checksums.ser
-.idea/caches/build_file_checksums.ser
-TagFilterView.iml
+*.iml
+*.json
+*.class
+local.properties
