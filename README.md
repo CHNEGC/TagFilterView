@@ -172,3 +172,6 @@ public class MainActivity extends AppCompatActivity {
 2.新增创建Tag方法onCreateTag(List<String> tags) 支持传入list创建Tags；
 3.新增参数onCreateTag(List<String> tags, boolean isRefresh) 第二个参数isRefresh用于
 反复调用onCreateTag的时候会重复创建tag，默认会false
+
+bug修复：
+选中状态字体颜色没有设置效果
