@@ -164,3 +164,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
+
+更新于：2018-11-21
+
+更新内容：
+1.新增属性maxRowNum，可以配置显示的最大行数，默认为不限制，该属性配置不能小于等于0；
+2.新增创建Tag方法onCreateTag(List<String> tags) 支持传入list创建Tags；
+3.新增参数onCreateTag(List<String> tags, boolean isRefresh) 第二个参数isRefresh用于
+反复调用onCreateTag的时候会重复创建tag，默认会false

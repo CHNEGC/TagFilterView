@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="ChooseLabelView">
+    <declare-styleable name="TagFilterLabelView">
         <attr name="verticalSpacing" format="dimension" />
         <attr name="horizontalSpacing" format="dimension" />
         <attr name="isShowTitle" format="boolean" />
@@ -25,5 +25,6 @@
         <attr name="tagBackground" format="reference" />
         <attr name="tagBackgroundSelect" format="reference" />
         <attr name="tagTextColorSelect" format="color" />
+        <attr name="maxRowNum" format="integer" />
     </declare-styleable>
 </resources>

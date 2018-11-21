@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.cn.tag.flter.ChooseLabelView
+            <com.cn.tag.flter.TagFilterLabelView
                 android:id="@+id/chooseLabelView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
                 app:isShowTitle="true"
                 app:titleText="自适应标签大小" />
 
-            <com.cn.tag.flter.ChooseLabelView
+            <com.cn.tag.flter.TagFilterLabelView
                 android:id="@+id/chooseLabelView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
                 app:isShowTitle="true"
                 app:titleText="无不限单选" />
 
-            <com.cn.tag.flter.ChooseLabelView
+            <com.cn.tag.flter.TagFilterLabelView
                 android:id="@+id/chooseLabelView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
                 app:titleText="有不限单选"
                 app:unlimitedText="不限" />
 
-            <com.cn.tag.flter.ChooseLabelView
+            <com.cn.tag.flter.TagFilterLabelView
                 android:id="@+id/chooseLabelView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,17 +52,18 @@
                 app:isShowTitle="true"
                 app:titleText="单选且可反选" />
 
-            <com.cn.tag.flter.ChooseLabelView
+            <com.cn.tag.flter.TagFilterLabelView
                 android:id="@+id/chooseLabelView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 app:isShowTitle="true"
                 app:isShowUnlimited="true"
+                app:tagBackground="@drawable/bg_tag_defualt2"
                 app:titleText="多选有不限"
                 app:unlimitedText="不限" />
 
-            <com.cn.tag.flter.ChooseLabelView
+            <com.cn.tag.flter.TagFilterLabelView
                 android:id="@+id/chooseLabelView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

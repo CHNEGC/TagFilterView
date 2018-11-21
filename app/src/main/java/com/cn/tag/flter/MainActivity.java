@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ChooseLabelView mChooseLabelView1;
-    private ChooseLabelView mChooseLabelView2;
-    private ChooseLabelView mChooseLabelView3;
-    private ChooseLabelView mChooseLabelView4;
-    private ChooseLabelView mChooseLabelView5;
-    private ChooseLabelView mChooseLabelView6;
+    private TagFilterLabelView mChooseLabelView1;
+    private TagFilterLabelView mChooseLabelView2;
+    private TagFilterLabelView mChooseLabelView3;
+    private TagFilterLabelView mChooseLabelView4;
+    private TagFilterLabelView mChooseLabelView5;
+    private TagFilterLabelView mChooseLabelView6;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,13 +23,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mChooseLabelView1 = (ChooseLabelView) findViewById(R.id.chooseLabelView1);
-        mChooseLabelView1 = (ChooseLabelView) findViewById(R.id.chooseLabelView1);
-        mChooseLabelView2 = (ChooseLabelView) findViewById(R.id.chooseLabelView2);
-        mChooseLabelView3 = (ChooseLabelView) findViewById(R.id.chooseLabelView3);
-        mChooseLabelView4 = (ChooseLabelView) findViewById(R.id.chooseLabelView4);
-        mChooseLabelView5 = (ChooseLabelView) findViewById(R.id.chooseLabelView5);
-        mChooseLabelView6 = (ChooseLabelView) findViewById(R.id.chooseLabelView6);
+        mChooseLabelView1 = (TagFilterLabelView) findViewById(R.id.chooseLabelView1);
+        mChooseLabelView1 = (TagFilterLabelView) findViewById(R.id.chooseLabelView1);
+        mChooseLabelView2 = (TagFilterLabelView) findViewById(R.id.chooseLabelView2);
+        mChooseLabelView3 = (TagFilterLabelView) findViewById(R.id.chooseLabelView3);
+        mChooseLabelView4 = (TagFilterLabelView) findViewById(R.id.chooseLabelView4);
+        mChooseLabelView5 = (TagFilterLabelView) findViewById(R.id.chooseLabelView5);
+        mChooseLabelView6 = (TagFilterLabelView) findViewById(R.id.chooseLabelView6);
 
         List<Integer> integers = new ArrayList<>();
         List<String> strings = new ArrayList<>();
@@ -49,28 +49,28 @@ public class MainActivity extends AppCompatActivity {
         mChooseLabelView5.onCreateTag(new String[]{"中国1", "背景1", "相关1", "天津1", "中国2", "背景2", "相关2", "天津2"}, integers, 0);
         mChooseLabelView6.onCreateTag(new String[]{"中国1", "背景1", "相关1", "天津1", "中国2", "背景2", "相关2", "天津2"}, strings);
 
-        mChooseLabelView2.setSingleSelectClickListener(new ChooseLabelView.OnSingleSelectClickListener() {
+        mChooseLabelView2.setSingleSelectClickListener(new TagFilterLabelView.OnSingleSelectClickListener() {
             @Override
             public void onClicked(int position, String tag) {
                 Toast.makeText(MainActivity.this, position + ">>>>" + tag, Toast.LENGTH_SHORT).show();
                 Log.d("ChooseLabelViewActivity", "单选：" + position + ">>>>" + tag);
             }
         });
-        mChooseLabelView3.setSingleSelectClickListener(new ChooseLabelView.OnSingleSelectClickListener() {
+        mChooseLabelView3.setSingleSelectClickListener(new TagFilterLabelView.OnSingleSelectClickListener() {
             @Override
             public void onClicked(int position, String tag) {
                 Toast.makeText(MainActivity.this, position + ">>>>" + tag, Toast.LENGTH_SHORT).show();
                 Log.d("ChooseLabelViewActivity", "单选：" + position + ">>>>" + tag);
             }
         });
-        mChooseLabelView4.setSingleSelectClickListener(new ChooseLabelView.OnSingleSelectClickListener() {
+        mChooseLabelView4.setSingleSelectClickListener(new TagFilterLabelView.OnSingleSelectClickListener() {
             @Override
             public void onClicked(int position, String tag) {
                 Toast.makeText(MainActivity.this, position + ">>>>" + tag, Toast.LENGTH_SHORT).show();
                 Log.d("ChooseLabelViewActivity", "单选：" + position + ">>>>" + tag);
             }
         });
-        mChooseLabelView5.setMoreSelectClickListener(new ChooseLabelView.OnMoreSelectClickListener() {
+        mChooseLabelView5.setMoreSelectClickListener(new TagFilterLabelView.OnMoreSelectClickListener() {
             @Override
             public void onClicked(int position, String tag, List<String> mSelectIndex, List<String> mSelectTag) {
                 Toast.makeText(MainActivity.this, position + ">>>>" + tag + ">>>" +
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         mSelectIndex.toString() + ">>>" + mSelectTag.toString());
             }
         });
-        mChooseLabelView6.setMoreSelectClickListener(new ChooseLabelView.OnMoreSelectClickListener() {
+        mChooseLabelView6.setMoreSelectClickListener(new TagFilterLabelView.OnMoreSelectClickListener() {
             @Override
             public void onClicked(int position, String tag, List<String> mSelectIndex, List<String> mSelectTag) {
                 Toast.makeText(MainActivity.this, position + ">>>>" + tag + ">>>" +

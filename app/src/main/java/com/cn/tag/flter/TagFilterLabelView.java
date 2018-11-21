@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * CHENGC
  */
-public class ChooseLabelView extends ViewGroup {
+public class TagFilterLabelView extends ViewGroup {
 
     /**
      * 子View之间的行间距
@@ -100,11 +100,11 @@ public class ChooseLabelView extends ViewGroup {
     /**
      * 标签左间距
      */
-    private int tagPaddingLeft = 10;
+    private int tagPaddingLeft = 15;
     /**
      * 标签右间距
      */
-    private int tagPaddingRight = 10;
+    private int tagPaddingRight = 15;
     /**
      * 标签底部间距
      */
@@ -117,6 +117,10 @@ public class ChooseLabelView extends ViewGroup {
      * 选中背景
      */
     private int tagBackgroundSelect;
+    /**
+     * 最大行数 默认不限制
+     */
+    private int maxRowNum = -1;
 
 
     private Context mContext;
@@ -134,17 +138,17 @@ public class ChooseLabelView extends ViewGroup {
     private List<String> mSelectTagsIndex = new ArrayList<>();
     private List<String> mSelectTagsName = new ArrayList<>();
 
-    public ChooseLabelView(Context context) {
+    public TagFilterLabelView(Context context) {
         this(context, null);
         this.mContext = context;
     }
 
-    public ChooseLabelView(Context context, AttributeSet attrs) {
+    public TagFilterLabelView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
         this.mContext = context;
     }
 
-    public ChooseLabelView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TagFilterLabelView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         this.mContext = context;
@@ -158,6 +162,8 @@ public class ChooseLabelView extends ViewGroup {
         isShowUnlimited = false;
         isSelectUnlimited = true;
         isAdaptive = false;
+
+        maxRowNum = Integer.MAX_VALUE;
 
         unlimitedText = "不限";
         titleText = "标签选择";
@@ -177,45 +183,50 @@ public class ChooseLabelView extends ViewGroup {
         tagPaddingLeft = dip2px(15);
         tagPaddingRight = dip2px(15);
 
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ChooseLabelView);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TagFilterLabelView);
 
         try {
             //通过属性获取配置信息
 
             //行列间距
-            verticalSpacing = (int) array.getDimension(R.styleable.ChooseLabelView_verticalSpacing, verticalSpacing);
-            horizontalSpacing = (int) array.getDimension(R.styleable.ChooseLabelView_horizontalSpacing, horizontalSpacing);
+            verticalSpacing = (int) array.getDimension(R.styleable.TagFilterLabelView_verticalSpacing, verticalSpacing);
+            horizontalSpacing = (int) array.getDimension(R.styleable.TagFilterLabelView_horizontalSpacing, horizontalSpacing);
 
             //配置显示项
-            isShowTitle = array.getBoolean(R.styleable.ChooseLabelView_isShowTitle, isShowTitle);
-            isAdaptive = array.getBoolean(R.styleable.ChooseLabelView_isAdaptive, isAdaptive);
-            isShowUnlimited = array.getBoolean(R.styleable.ChooseLabelView_isShowUnlimited, isShowUnlimited);
-            isSelectUnlimited = array.getBoolean(R.styleable.ChooseLabelView_isSelectUnlimited, isSelectUnlimited);
-            isMoreSelect = array.getBoolean(R.styleable.ChooseLabelView_isMoreSelect, isMoreSelect);
-            isBackSelect = array.getBoolean(R.styleable.ChooseLabelView_isBackSelect, isBackSelect);
+            isShowTitle = array.getBoolean(R.styleable.TagFilterLabelView_isShowTitle, isShowTitle);
+            isAdaptive = array.getBoolean(R.styleable.TagFilterLabelView_isAdaptive, isAdaptive);
+            isShowUnlimited = array.getBoolean(R.styleable.TagFilterLabelView_isShowUnlimited, isShowUnlimited);
+            isSelectUnlimited = array.getBoolean(R.styleable.TagFilterLabelView_isSelectUnlimited, isSelectUnlimited);
+            isMoreSelect = array.getBoolean(R.styleable.TagFilterLabelView_isMoreSelect, isMoreSelect);
+            isBackSelect = array.getBoolean(R.styleable.TagFilterLabelView_isBackSelect, isBackSelect);
 
             //配置不限和标题
-            unlimitedText = array.getString(R.styleable.ChooseLabelView_unlimitedText);
-            titleText = array.getString(R.styleable.ChooseLabelView_titleText);
+            unlimitedText = array.getString(R.styleable.TagFilterLabelView_unlimitedText);
+            titleText = array.getString(R.styleable.TagFilterLabelView_titleText);
 
             //标签的宽高
-            tagWidth = (int) array.getDimension(R.styleable.ChooseLabelView_tagWidth, tagWidth);
-            tagHeight = (int) array.getDimension(R.styleable.ChooseLabelView_tagHeight, tagHeight);
+            tagWidth = (int) array.getDimension(R.styleable.TagFilterLabelView_tagWidth, tagWidth);
+            tagHeight = (int) array.getDimension(R.styleable.TagFilterLabelView_tagHeight, tagHeight);
+            maxRowNum = array.getInteger(R.styleable.TagFilterLabelView_maxRowNum, maxRowNum);
+
+            if (maxRowNum <= 0) {
+                throw new NumberFormatException("maxRowNum 必须大于0，默认为不限制行数");
+            }
 
             //标题字体大小和颜色
-            titleTextSize = (int) array.getDimension(R.styleable.ChooseLabelView_titleTextSize, titleTextSize);
-            titleTextColor = array.getColor(R.styleable.ChooseLabelView_titleTextColor, titleTextColor);
+            titleTextSize = (int) array.getDimension(R.styleable.TagFilterLabelView_titleTextSize, titleTextSize);
+            titleTextColor = array.getColor(R.styleable.TagFilterLabelView_titleTextColor, titleTextColor);
 
             //标签相关属性
-            tagTextSize = (int) array.getDimension(R.styleable.ChooseLabelView_tagTextSize, tagTextSize);
-            tagTextColor = array.getColor(R.styleable.ChooseLabelView_tagTextColor, tagTextColor);
-            tagTextColorSelect = (int) array.getDimension(R.styleable.ChooseLabelView_tagTextColorSelect, tagTextColorSelect);
-            tagBackground = array.getResourceId(R.styleable.ChooseLabelView_tagBackground, R.drawable.bg_tag_defualt);
-            tagBackgroundSelect = array.getResourceId(R.styleable.ChooseLabelView_tagBackgroundSelect, R.drawable.bg_tag_select);
-            tagPaddingTop = (int) array.getDimension(R.styleable.ChooseLabelView_tagPaddingTop, tagPaddingTop);
-            tagPaddingRight = (int) array.getDimension(R.styleable.ChooseLabelView_tagPaddingRight, tagPaddingRight);
-            tagPaddingLeft = (int) array.getDimension(R.styleable.ChooseLabelView_tagPaddingLeft, tagPaddingLeft);
-            tagPaddingBottom = (int) array.getDimension(R.styleable.ChooseLabelView_tagPaddingBottom, tagPaddingBottom);
+            tagTextSize = (int) array.getDimension(R.styleable.TagFilterLabelView_tagTextSize, tagTextSize);
+            tagTextColor = array.getColor(R.styleable.TagFilterLabelView_tagTextColor, tagTextColor);
+            tagTextColorSelect = (int) array.getDimension(R.styleable.TagFilterLabelView_tagTextColorSelect, tagTextColorSelect);
+            tagBackground = array.getResourceId(R.styleable.TagFilterLabelView_tagBackground, R.drawable.bg_tag_defualt);
+            tagBackgroundSelect = array.getResourceId(R.styleable.TagFilterLabelView_tagBackgroundSelect, R.drawable.bg_tag_select);
+            tagPaddingTop = (int) array.getDimension(R.styleable.TagFilterLabelView_tagPaddingTop, tagPaddingTop);
+            tagPaddingRight = (int) array.getDimension(R.styleable.TagFilterLabelView_tagPaddingRight, tagPaddingRight);
+            tagPaddingLeft = (int) array.getDimension(R.styleable.TagFilterLabelView_tagPaddingLeft, tagPaddingLeft);
+            tagPaddingBottom = (int) array.getDimension(R.styleable.TagFilterLabelView_tagPaddingBottom, tagPaddingBottom);
 
             setPadding(horizontalSpacing, 0, horizontalSpacing, 0);
         } finally {
@@ -234,6 +245,7 @@ public class ChooseLabelView extends ViewGroup {
         int childViewLeft = parentLeft;
         int childViewTop = parentTop;
 
+        int row = 1;//行数
         //行高最大值
         int rowMaxHeight = 0;
         //获取子view
@@ -250,10 +262,19 @@ public class ChooseLabelView extends ViewGroup {
             if (child.getVisibility() != View.GONE) {
 
                 if (childViewLeft + childWidth > parentRight) {
+
+                    //设置显示行数 由于行数是从
+                    if (maxRowNum > 0 && row == maxRowNum) {
+                        break;
+                    }
+
                     //换行
                     childViewLeft = parentLeft;
                     childViewTop += rowMaxHeight + verticalSpacing;
                     rowMaxHeight = childHeight;
+
+                    //记录行数
+                    row++;
                 } else {
                     rowMaxHeight = Math.max(rowMaxHeight, childHeight);
                 }
@@ -281,7 +302,7 @@ public class ChooseLabelView extends ViewGroup {
         int width = 0;
         int height = 0;
 
-        int row = 0;//行数
+        int row = 1;//行数
         int rowWidth = 0;//行宽
         int rowMaxHeiht = 0;//行高
 
@@ -318,6 +339,11 @@ public class ChooseLabelView extends ViewGroup {
                     rowWidth += horizontalSpacing;
                 }
             }
+
+            //设置显示行数
+            if (maxRowNum > 0 && row == maxRowNum) {
+                break;
+            }
         }
 
         //最后一行的高度
@@ -326,7 +352,7 @@ public class ChooseLabelView extends ViewGroup {
         height += getPaddingBottom() + getPaddingTop();
 
         //如果标签只有一行，则就设置宽度包裹标签
-        if (row == 0) {
+        if (row == 1) {
             width += rowWidth;
             width += getPaddingLeft() + getPaddingRight();
         } else {
@@ -342,6 +368,24 @@ public class ChooseLabelView extends ViewGroup {
      * @param tags 标签数据
      */
     public void onCreateTag(String[] tags) {
+        onCreateTag(tags, false);
+    }
+
+    public void onCreateTag(String[] tags, boolean isRefresh) {
+        if (isRefresh) {
+            removeAllViews();
+        }
+        onCreateTag(tags, -1, null, null, null);
+    }
+
+    public void onCreateTag(List<String> tags) {
+        onCreateTag(tags, false);
+    }
+
+    public void onCreateTag(List<String> tags, boolean isRefresh) {
+        if (isRefresh) {
+            removeAllViews();
+        }
         onCreateTag(tags, -1, null, null, null);
     }
 
@@ -350,6 +394,13 @@ public class ChooseLabelView extends ViewGroup {
      * @param index 下标
      */
     public void onCreateTag(String[] tags, int index) {
+        onCreateTag(tags, index, false);
+    }
+
+    public void onCreateTag(String[] tags, int index, boolean isRefresh) {
+        if (isRefresh) {
+            removeAllViews();
+        }
         onCreateTag(tags, index, null, null, null);
     }
 
@@ -358,15 +409,29 @@ public class ChooseLabelView extends ViewGroup {
      * @param index 文案
      */
     public void onCreateTag(String[] tags, String index) {
+        onCreateTag(tags, index, false);
+    }
+
+    public void onCreateTag(String[] tags, String index, boolean isRefresh) {
+        if (isRefresh) {
+            removeAllViews();
+        }
         onCreateTag(tags, -1, null, index, null);
     }
 
     /**
      * @param tags          标签数据
      * @param mSelectIndexs 默认选中集合
-     * @param t             无用参数
+     * @param t             无用参数，只是用于区分方法
      */
     public void onCreateTag(String[] tags, List<Integer> mSelectIndexs, int t) {
+        onCreateTag(tags, mSelectIndexs, false, t);
+    }
+
+    public void onCreateTag(String[] tags, List<Integer> mSelectIndexs, boolean isRefresh, int t) {
+        if (isRefresh) {
+            removeAllViews();
+        }
         onCreateTag(tags, -1, mSelectIndexs, null, null);
     }
 
@@ -375,6 +440,13 @@ public class ChooseLabelView extends ViewGroup {
      * @param mSelectTags 默认选择集合
      */
     public void onCreateTag(String[] tags, List<String> mSelectTags) {
+        onCreateTag(tags, mSelectTags, false);
+    }
+
+    public void onCreateTag(String[] tags, List<String> mSelectTags, boolean isRefresh) {
+        if (isRefresh) {
+            removeAllViews();
+        }
         onCreateTag(tags, -1, null, null, mSelectTags);
     }
 
@@ -432,6 +504,101 @@ public class ChooseLabelView extends ViewGroup {
         //创建标签
         for (int i = 0; i < tags.length; i++) {
             TextView textView = onCreateTagView(tags[i]);
+            //如果有不限，下标要往后加1
+            int index = i;
+            if (isShowUnlimited) {
+                index += 1;
+            }
+
+            if (isMoreSelect) {//多选
+                if (null != mSelectIndexs && mSelectIndexs.size() > 0) {
+                    if (mSelectIndexs.contains(index)) {
+                        textView.setBackgroundResource(tagBackgroundSelect);
+                        mSelectTag.add(textView);
+                        mSelectTagsName.add(textView.getText().toString());
+                        mSelectTagsIndex.add(index + "");
+                    } else {
+                        textView.setBackgroundResource(tagBackground);
+                    }
+                }
+                if (null != mSelectTags && mSelectTags.size() > 0) {
+                    if (mSelectTags.contains(textView.getText().toString())) {
+                        textView.setBackgroundResource(tagBackgroundSelect);
+                        mSelectTag.add(textView);
+                        mSelectTagsName.add(textView.getText().toString());
+                        mSelectTagsIndex.add(index + "");
+                    } else {
+                        textView.setBackgroundResource(tagBackground);
+                    }
+                }
+            } else {//单选
+                if (mSelectIndex == index || (!TextUtils.isEmpty(mSelectedTag) && mSelectedTag.equals(textView.getText().toString()))) {
+                    textView.setBackgroundResource(tagBackgroundSelect);
+                    mSelectTag.add(textView);
+                    mSelectTagsName.add(textView.getText().toString());
+                    mSelectTagsIndex.add(index + "");
+                } else {
+                    textView.setBackgroundResource(tagBackground);
+                }
+            }
+
+            final int finalIndex = index;
+            textView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onTagClick(view, finalIndex);
+                }
+            });
+        }
+    }
+
+    public void onCreateTag(List<String> tags, int mSelectIndex, List<Integer> mSelectIndexs, String mSelectedTag, List<String> mSelectTags) {
+
+        //计算tag的宽高
+        if (!isAdaptive) {
+            tagWidth = ((getScreenWidth() - getPaddingRight() - getPaddingLeft() - (horizontalSpacing * 3)) / 4);
+            tagHeight = dip2px(32);
+        } else {
+            tagWidth = 0;
+            tagHeight = 0;
+        }
+
+        //创建标题
+        if (isShowTitle) {
+            TextView titleTv = new TextView(mContext);
+            titleTv.setText(TextUtils.isEmpty(titleText) ? "标题" : titleText);
+            titleTv.setTextColor(titleTextColor);
+            titleTv.setTextSize(titleTextSize);
+
+            LayoutParams paramsTitle = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            titleTv.setLayoutParams(paramsTitle);
+
+            addView(titleTv);
+        }
+        //是否有不限
+        if (isShowUnlimited) {
+            TextView textView = onCreateTagView(TextUtils.isEmpty(unlimitedText) ? "不限" : unlimitedText);
+            //设置了有不限。但是有设置默认选中不限以外的其他项，就不选中不限项了
+            if (isSelectUnlimited && mSelectIndex == -1 && (null == mSelectIndexs || mSelectIndexs.size() <= 0) && TextUtils.isEmpty(mSelectedTag) && (null == mSelectTags || mSelectTags.size() <= 0)) {
+                textView.setBackgroundResource(tagBackgroundSelect);
+                mSelectTag.add(textView);
+                mSelectTagsIndex.add("0");
+            } else {
+                mSelectTag.clear();
+                mSelectTagsIndex.clear();
+                textView.setBackgroundResource(tagBackground);
+            }
+            textView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onTagClick(view, 0);
+                }
+            });
+        }
+
+        //创建标签
+        for (int i = 0; i < tags.size(); i++) {
+            TextView textView = onCreateTagView(tags.get(i));
             //如果有不限，下标要往后加1
             int index = i;
             if (isShowUnlimited) {
