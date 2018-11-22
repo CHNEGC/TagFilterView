@@ -220,10 +220,10 @@ public class TagFilterLabelView extends ViewGroup {
             if (!isAdaptive) {
                 tagWidth = (int) array.getDimension(R.styleable.TagFilterLabelView_tagWidth, tagWidth);
                 tagHeight = (int) array.getDimension(R.styleable.TagFilterLabelView_tagHeight, tagHeight);
-                maxRowNum = array.getInteger(R.styleable.TagFilterLabelView_maxRowNum, maxRowNum);
+                maxColumn = array.getInteger(R.styleable.TagFilterLabelView_maxColumn, maxColumn);
             }
 
-            maxColumn = array.getInteger(R.styleable.TagFilterLabelView_maxColumn, maxColumn);
+            maxRowNum = array.getInteger(R.styleable.TagFilterLabelView_maxRowNum, maxRowNum);
 
             if (maxRowNum <= 0) {
                 throw new NumberFormatException("maxRowNum 必须大于0，默认为不限制行数");
