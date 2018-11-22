@@ -12,8 +12,8 @@
         <attr name="isShowUnlimited" format="boolean" />
         <attr name="isSelectUnlimited" format="boolean" />
         <attr name="unlimitedText" format="string" />
-        <attr name="titleTextSize" format="dimension" />
-        <attr name="tagTextSize" format="dimension" />
+        <attr name="titleTextSize" format="integer" />
+        <attr name="tagTextSize" format="integer" />
         <attr name="tagWidth" format="dimension" />
         <attr name="tagHeight" format="dimension" />
         <attr name="tagPaddingTop" format="dimension" />

@@ -233,11 +233,11 @@ public class TagFilterLabelView extends ViewGroup {
             }
 
             //标题字体大小和颜色
-            titleTextSize = (int) array.getDimension(R.styleable.TagFilterLabelView_titleTextSize, titleTextSize);
+            titleTextSize = array.getInteger(R.styleable.TagFilterLabelView_titleTextSize, titleTextSize);
             titleTextColor = array.getColor(R.styleable.TagFilterLabelView_titleTextColor, titleTextColor);
 
             //标签相关属性
-            tagTextSize = (int) array.getDimension(R.styleable.TagFilterLabelView_tagTextSize, tagTextSize);
+            tagTextSize = array.getInteger(R.styleable.TagFilterLabelView_tagTextSize, tagTextSize);
             tagTextColor = array.getColor(R.styleable.TagFilterLabelView_tagTextColor, tagTextColor);
             tagTextColorSelect = array.getColor(R.styleable.TagFilterLabelView_tagTextColorSelect, tagTextColorSelect);
             tagBackground = array.getResourceId(R.styleable.TagFilterLabelView_tagBackground, R.drawable.bg_tag_defualt);
@@ -520,7 +520,7 @@ public class TagFilterLabelView extends ViewGroup {
             TextView titleTv = new TextView(mContext);
             titleTv.setText(TextUtils.isEmpty(titleText) ? "标题" : titleText);
             titleTv.setTextColor(titleTextColor);
-            titleTv.setTextSize(titleTextSize);
+            titleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,titleTextSize);
 
             LinearLayout.LayoutParams paramsTitle = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
             paramsTitle.setMargins(0, 0, 0, titleVerticalSpacing);
