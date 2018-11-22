@@ -21,6 +21,7 @@
                 app:isAdaptive="true"
                 app:titleVerticalSpacing="50dp"
                 app:isShowTitle="true"
+                app:tagHeight="50dp"
                 app:titleText="自适应标签大小" />
 
             <!--<com.cn.tag.flter.TagFilterLabelView-->

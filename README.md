@@ -182,3 +182,12 @@ bug修复：
 1.解决bug不能动态设置tagHeight的问题；
 2.新增属性titleVerticalSpacing 设置title与tag之间的间距；
 3.新增maxColumn属性配置每个显示的个数，默认为4；
+4.非自适应的条件下
+//标签的宽高
+            if (!isAdaptive) {
+                tagWidth = (int) array.getDimension(R.styleable.TagFilterLabelView_tagWidth, tagWidth);
+                tagHeight = (int) array.getDimension(R.styleable.TagFilterLabelView_tagHeight, tagHeight);
+                maxColumn = array.getInteger(R.styleable.TagFilterLabelView_maxColumn, maxColumn);
+                maxRowNum = array.getInteger(R.styleable.TagFilterLabelView_maxRowNum, maxRowNum);
+            }
+            这些属性才会生效
