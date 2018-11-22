@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -74,6 +75,10 @@ public class TagFilterLabelView extends ViewGroup {
     private int titleTextColor = Color.parseColor("#333333");
 
     /**
+     * title与标签之间的间距
+     */
+    private int titleVerticalSpacing;
+    /**
      * 标签字体
      */
     private int tagTextSize = 12;
@@ -121,6 +126,10 @@ public class TagFilterLabelView extends ViewGroup {
      * 最大行数 默认不限制
      */
     private int maxRowNum = -1;
+    /**
+     * 最的列表数
+     */
+    private int maxColumn = 4;
 
 
     private Context mContext;
@@ -155,6 +164,7 @@ public class TagFilterLabelView extends ViewGroup {
 
         verticalSpacing = dip2px(10);
         horizontalSpacing = dip2px(10);
+        titleVerticalSpacing = dip2px(15);
 
         isShowTitle = false;
         isBackSelect = false;
@@ -163,7 +173,7 @@ public class TagFilterLabelView extends ViewGroup {
         isSelectUnlimited = true;
         isAdaptive = false;
 
-        maxRowNum = -1;
+        maxRowNum = Integer.MAX_VALUE;
 
         unlimitedText = "不限";
         titleText = "标签选择";
@@ -174,8 +184,9 @@ public class TagFilterLabelView extends ViewGroup {
         tagTextSize = pxToSp(12);
         tagTextColor = Color.parseColor("#333333");
         tagTextColorSelect = Color.parseColor("#E03236");
+        tagWidth = 0;
         tagHeight = 0;
-        tagHeight = 0;
+        maxColumn = 4;
         tagBackground = R.drawable.bg_tag_defualt;
         tagBackgroundSelect = R.drawable.bg_tag_select;
         tagPaddingTop = dip2px(5);
@@ -191,6 +202,7 @@ public class TagFilterLabelView extends ViewGroup {
             //行列间距
             verticalSpacing = (int) array.getDimension(R.styleable.TagFilterLabelView_verticalSpacing, verticalSpacing);
             horizontalSpacing = (int) array.getDimension(R.styleable.TagFilterLabelView_horizontalSpacing, horizontalSpacing);
+            titleVerticalSpacing = (int) array.getDimension(R.styleable.TagFilterLabelView_titleVerticalSpacing, titleVerticalSpacing);
 
             //配置显示项
             isShowTitle = array.getBoolean(R.styleable.TagFilterLabelView_isShowTitle, isShowTitle);
@@ -207,10 +219,14 @@ public class TagFilterLabelView extends ViewGroup {
             //标签的宽高
             tagWidth = (int) array.getDimension(R.styleable.TagFilterLabelView_tagWidth, tagWidth);
             tagHeight = (int) array.getDimension(R.styleable.TagFilterLabelView_tagHeight, tagHeight);
-            maxRowNum = array.getInteger(R.styleable.TagFilterLabelView_maxRowNum, -1);
+            maxRowNum = array.getInteger(R.styleable.TagFilterLabelView_maxRowNum, maxRowNum);
+            maxColumn = array.getInteger(R.styleable.TagFilterLabelView_maxColumn, maxColumn);
 
             if (maxRowNum <= 0) {
                 throw new NumberFormatException("maxRowNum 必须大于0，默认为不限制行数");
+            }
+            if (maxColumn <= 0) {
+                throw new NumberFormatException("maxColumn 必须大于0，默认为以手机屏幕宽分成四等分，即每行显示4列");
             }
 
             //标题字体大小和颜色
@@ -270,7 +286,11 @@ public class TagFilterLabelView extends ViewGroup {
 
                     //换行
                     childViewLeft = parentLeft;
-                    childViewTop += rowMaxHeight + verticalSpacing;
+                    if (isShowTitle && row == 1) {//如果显示title的时候，也要计算title与tag之间的高度
+                        childViewTop += rowMaxHeight + titleVerticalSpacing;
+                    } else {
+                        childViewTop += rowMaxHeight + verticalSpacing;
+                    }
                     rowMaxHeight = childHeight;
 
                     //记录行数
@@ -326,7 +346,11 @@ public class TagFilterLabelView extends ViewGroup {
                     //下一行
                     rowWidth = childWidth;
                     //高度
-                    height += rowMaxHeiht + verticalSpacing;
+                    if (isShowTitle && row == 1) {
+                        height += rowMaxHeiht + titleVerticalSpacing;
+                    } else {
+                        height += rowMaxHeiht + verticalSpacing;
+                    }
                     //下一行的高度
                     rowMaxHeiht = childHeight;
                     //记录行数
@@ -457,6 +481,25 @@ public class TagFilterLabelView extends ViewGroup {
         onCreateTag(tags, -1, null, null, mSelectTags);
     }
 
+    private void setTagWhSize() {
+        //计算tag的宽高
+        if (!isAdaptive) {
+            if (tagWidth == 0) {
+                tagWidth = ((getScreenWidth() - getPaddingRight() - getPaddingLeft() - (horizontalSpacing * 3)) / maxColumn);
+            }
+            if (tagHeight == 0) {
+                tagHeight = dip2px(32);
+            }
+        } else {
+            if (tagWidth == 0) {
+                tagWidth = 0;
+            }
+            if (tagHeight == 0) {
+                tagHeight = 0;
+            }
+        }
+    }
+
     /**
      * @param tags
      * @param mSelectIndex
@@ -466,14 +509,8 @@ public class TagFilterLabelView extends ViewGroup {
      */
     public void onCreateTag(String[] tags, int mSelectIndex, List<Integer> mSelectIndexs, String mSelectedTag, List<String> mSelectTags) {
 
-        //计算tag的宽高
-        if (!isAdaptive) {
-            tagWidth = ((getScreenWidth() - getPaddingRight() - getPaddingLeft() - (horizontalSpacing * 3)) / 4);
-            tagHeight = dip2px(32);
-        } else {
-            tagWidth = 0;
-            tagHeight = 0;
-        }
+        //计算Tag的宽高度
+        setTagWhSize();
 
         //创建标题
         if (isShowTitle) {
@@ -482,7 +519,8 @@ public class TagFilterLabelView extends ViewGroup {
             titleTv.setTextColor(titleTextColor);
             titleTv.setTextSize(titleTextSize);
 
-            LayoutParams paramsTitle = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams paramsTitle = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            paramsTitle.setMargins(0, 0, 0, titleVerticalSpacing);
             titleTv.setLayoutParams(paramsTitle);
 
             addView(titleTv);
@@ -569,14 +607,8 @@ public class TagFilterLabelView extends ViewGroup {
 
     public void onCreateTag(List<String> tags, int mSelectIndex, List<Integer> mSelectIndexs, String mSelectedTag, List<String> mSelectTags) {
 
-        //计算tag的宽高
-        if (!isAdaptive) {
-            tagWidth = ((getScreenWidth() - getPaddingRight() - getPaddingLeft() - (horizontalSpacing * 3)) / 4);
-            tagHeight = dip2px(32);
-        } else {
-            tagWidth = 0;
-            tagHeight = 0;
-        }
+        //计算Tag的宽高度
+        setTagWhSize();
 
         //创建标题
         if (isShowTitle) {
@@ -684,12 +716,16 @@ public class TagFilterLabelView extends ViewGroup {
         tag.setTextSize(TypedValue.COMPLEX_UNIT_SP, tagTextSize);
         tag.setBackgroundResource(tagBackground);
         LayoutParams paramsTag;
-        if (tagHeight > 0 && tagWidth > 0) {
+        if (tagHeight > 0 && tagWidth <= 0) {
+            paramsTag = new LayoutParams(LayoutParams.WRAP_CONTENT, tagHeight);
+        } else if (tagHeight <= 0 && tagWidth > 0) {
+            paramsTag = new LayoutParams(tagWidth, LayoutParams.WRAP_CONTENT);
+        } else if (tagHeight > 0 && tagWidth > 0) {
             paramsTag = new LayoutParams(tagWidth, tagHeight);
         } else {
-            tag.setPadding(tagPaddingLeft, tagPaddingTop, tagPaddingRight, tagPaddingBottom);
             paramsTag = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         }
+        tag.setPadding(tagPaddingLeft, tagPaddingTop, tagPaddingRight, tagPaddingBottom);
         tag.setLayoutParams(paramsTag);
 
         addView(tag);

@@ -4,6 +4,7 @@
     <declare-styleable name="TagFilterLabelView">
         <attr name="verticalSpacing" format="dimension" />
         <attr name="horizontalSpacing" format="dimension" />
+        <attr name="titleVerticalSpacing" format="dimension" />
         <attr name="isShowTitle" format="boolean" />
         <attr name="isMoreSelect" format="boolean" />
         <attr name="isBackSelect" format="boolean" />
@@ -26,5 +27,6 @@
         <attr name="tagBackgroundSelect" format="reference" />
         <attr name="tagTextColorSelect" format="color" />
         <attr name="maxRowNum" format="integer" />
+        <attr name="maxColumn" format="integer" />
     </declare-styleable>
 </resources>

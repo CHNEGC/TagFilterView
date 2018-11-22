@@ -175,3 +175,10 @@ public class MainActivity extends AppCompatActivity {
 
 bug修复：
 选中状态字体颜色没有设置效果
+
+
+更新于：2018-11-22
+更新内容：
+1.解决bug不能动态设置tagHeight的问题；
+2.新增属性titleVerticalSpacing 设置title与tag之间的间距；
+3.新增maxColumn属性配置每个显示的个数，默认为4；
