@@ -801,6 +801,7 @@ public class TagFilterLabelView extends ViewGroup {
             if (isMoreSelect) {//支持多选
                 if (mSelectTagsIndex.contains("0") && isShowUnlimited) {
                     for (TextView textView : mSelectTag) {
+                        textView.setTextColor(tagTextColor);
                         textView.setBackgroundResource(tagBackground);
                     }
                     mSelectTag.clear();
@@ -832,8 +833,10 @@ public class TagFilterLabelView extends ViewGroup {
                 if (mSelectTagsIndex.contains(position + "")) {
                     for (TextView textView : mSelectTag) {
                         textView.setBackgroundResource(tagBackground);
+                        textView.setTextColor(tagTextColor);
                     }
 
+                    tagTextView.setTextColor(tagTextColor);
                     tagTextView.setBackgroundResource(tagBackground);
                     mSelectTag.clear();
                     mSelectTagsName.clear();
@@ -844,14 +847,15 @@ public class TagFilterLabelView extends ViewGroup {
                     }
                 } else {
                     for (TextView textView : mSelectTag) {
+                        textView.setTextColor(tagTextColor);
                         textView.setBackgroundResource(tagBackground);
                     }
                     mSelectTag.clear();
                     mSelectTagsName.clear();
                     mSelectTagsIndex.clear();
 
-                    tagTextView.setBackgroundResource(tagBackgroundSelect);
                     tagTextView.setTextColor(tagTextColorSelect);
+                    tagTextView.setBackgroundResource(tagBackgroundSelect);
                     mSelectTag.add(tagTextView);
                     mSelectTagsIndex.add(position + "");
                     mSelectTagsName.add(tagTextView.getText().toString());
