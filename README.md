@@ -191,3 +191,4 @@ bug修复：
                 maxRowNum = array.getInteger(R.styleable.TagFilterLabelView_maxRowNum, maxRowNum);
             }
             这些属性才会生效
+5.设置字体bug修复

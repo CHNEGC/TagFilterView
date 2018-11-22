@@ -18,68 +18,70 @@
                 android:id="@+id/chooseLabelView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:isAdaptive="true"
-                app:titleVerticalSpacing="50dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                app:isAdaptive="false"
                 app:isShowTitle="true"
-                app:titleTextSize="16"
                 app:tagHeight="50dp"
                 app:tagTextSize="16"
-                app:titleText="自适应标签大小" />
+                app:titleText="自适应标签大小"
+                app:titleTextSize="16"
+                app:titleVerticalSpacing="50dp" />
 
             <!--<com.cn.tag.flter.TagFilterLabelView-->
-                <!--android:id="@+id/chooseLabelView2"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="20dp"-->
-                <!--app:isMoreSelect="false"-->
-                <!--app:isShowTitle="true"-->
-                <!--app:titleText="无不限单选"-->
-                <!--android:visibility="gone"-->
-                <!--app:titleVerticalSpacing="30dp" />-->
+            <!--android:id="@+id/chooseLabelView2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--app:isMoreSelect="false"-->
+            <!--app:isShowTitle="true"-->
+            <!--app:titleText="无不限单选"-->
+            <!--android:visibility="gone"-->
+            <!--app:titleVerticalSpacing="30dp" />-->
 
             <!--<com.cn.tag.flter.TagFilterLabelView-->
-                <!--android:id="@+id/chooseLabelView3"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:visibility="gone"-->
-                <!--android:layout_marginTop="20dp"-->
-                <!--app:isMoreSelect="false"-->
-                <!--app:isShowTitle="true"-->
-                <!--app:isShowUnlimited="true"-->
-                <!--app:titleText="有不限单选"-->
-                <!--app:unlimitedText="不限" />-->
+            <!--android:id="@+id/chooseLabelView3"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:visibility="gone"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--app:isMoreSelect="false"-->
+            <!--app:isShowTitle="true"-->
+            <!--app:isShowUnlimited="true"-->
+            <!--app:titleText="有不限单选"-->
+            <!--app:unlimitedText="不限" />-->
 
             <!--<com.cn.tag.flter.TagFilterLabelView-->
-                <!--android:id="@+id/chooseLabelView4"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="20dp"-->
-                <!--app:isBackSelect="true"-->
-                <!--app:isMoreSelect="false"-->
-                <!--android:visibility="gone"-->
-                <!--app:isShowTitle="true"-->
-                <!--app:titleText="单选且可反选" />-->
+            <!--android:id="@+id/chooseLabelView4"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--app:isBackSelect="true"-->
+            <!--app:isMoreSelect="false"-->
+            <!--android:visibility="gone"-->
+            <!--app:isShowTitle="true"-->
+            <!--app:titleText="单选且可反选" />-->
 
             <!--<com.cn.tag.flter.TagFilterLabelView-->
-                <!--android:id="@+id/chooseLabelView5"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="20dp"-->
-                <!--app:isShowTitle="true"-->
-                <!--android:visibility="gone"-->
-                <!--app:isShowUnlimited="true"-->
-                <!--app:tagBackground="@drawable/bg_tag_defualt2"-->
-                <!--app:titleText="多选有不限"-->
-                <!--app:unlimitedText="不限" />-->
+            <!--android:id="@+id/chooseLabelView5"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--app:isShowTitle="true"-->
+            <!--android:visibility="gone"-->
+            <!--app:isShowUnlimited="true"-->
+            <!--app:tagBackground="@drawable/bg_tag_defualt2"-->
+            <!--app:titleText="多选有不限"-->
+            <!--app:unlimitedText="不限" />-->
 
             <!--<com.cn.tag.flter.TagFilterLabelView-->
-                <!--android:id="@+id/chooseLabelView6"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:visibility="gone"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="20dp"-->
-                <!--app:isShowTitle="true"-->
-                <!--app:titleText="多选无不限" />-->
+            <!--android:id="@+id/chooseLabelView6"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:visibility="gone"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--app:isShowTitle="true"-->
+            <!--app:titleText="多选无不限" />-->
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

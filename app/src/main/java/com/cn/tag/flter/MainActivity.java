@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         strings.add("背景2");
         strings.add("中国2");
 
-        mChooseLabelView1.onCreateTag(new String[]{"中国ddddd", "背景fffff", "相关dddd", "sssss", "中ddd国", "背景ss", "dsds相关", "ddd天津"});
+        mChooseLabelView1.onCreateTag(new String[]{"购买新房", "购买二手房", "购买新房", "购买二手房", "中ddd国", "背景ss", "dsds相关", "ddd天津"});
 //        mChooseLabelView2.onCreateTag(new String[]{"中国", "背景", "相关", "天津", "中国", "背景", "相关", "天津"}, 0);
 //        mChooseLabelView3.onCreateTag(new String[]{"中国", "背景", "相关", "天津", "中国", "背景", "相关", "天津"}, 1);
 //        mChooseLabelView4.onCreateTag(new String[]{"中国", "背景", "相关", "天津", "中国", "背景", "相关", "天津"});

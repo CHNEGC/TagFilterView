@@ -247,7 +247,7 @@ public class TagFilterLabelView extends ViewGroup {
             tagPaddingLeft = (int) array.getDimension(R.styleable.TagFilterLabelView_tagPaddingLeft, tagPaddingLeft);
             tagPaddingBottom = (int) array.getDimension(R.styleable.TagFilterLabelView_tagPaddingBottom, tagPaddingBottom);
 
-            setPadding(horizontalSpacing, 0, horizontalSpacing, 0);
+//            setPadding(horizontalSpacing, 0, horizontalSpacing, 0);
         } finally {
             array.recycle();
         }
@@ -488,7 +488,12 @@ public class TagFilterLabelView extends ViewGroup {
         //计算tag的宽高
         if (!isAdaptive) {
             if (tagWidth == 0) {
-                tagWidth = ((getScreenWidth() - getPaddingRight() - getPaddingLeft() - (horizontalSpacing * 3)) / maxColumn);
+                int parentPadding = 0;
+                if (null != getParent()) {
+                    ViewGroup viewGroup = (ViewGroup) getParent();
+                    parentPadding = viewGroup.getPaddingLeft() + viewGroup.getPaddingRight();
+                }
+                tagWidth = ((getScreenWidth() - parentPadding - getPaddingRight() - getPaddingLeft() - (horizontalSpacing * 3)) / maxColumn);
             }
             if (tagHeight == 0) {
                 tagHeight = dip2px(32);
@@ -520,7 +525,7 @@ public class TagFilterLabelView extends ViewGroup {
             TextView titleTv = new TextView(mContext);
             titleTv.setText(TextUtils.isEmpty(titleText) ? "标题" : titleText);
             titleTv.setTextColor(titleTextColor);
-            titleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,titleTextSize);
+            titleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, titleTextSize);
 
             LinearLayout.LayoutParams paramsTitle = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
             paramsTitle.setMargins(0, 0, 0, titleVerticalSpacing);
@@ -726,9 +731,9 @@ public class TagFilterLabelView extends ViewGroup {
         } else if (tagHeight > 0 && tagWidth > 0) {
             paramsTag = new LayoutParams(tagWidth, tagHeight);
         } else {
+            tag.setPadding(tagPaddingLeft, tagPaddingTop, tagPaddingRight, tagPaddingBottom);
             paramsTag = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         }
-        tag.setPadding(tagPaddingLeft, tagPaddingTop, tagPaddingRight, tagPaddingBottom);
         tag.setLayoutParams(paramsTag);
 
         addView(tag);
@@ -757,7 +762,8 @@ public class TagFilterLabelView extends ViewGroup {
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        return size.x;
+        MarginLayoutParams params = (MarginLayoutParams) getLayoutParams();
+        return size.x - params.leftMargin - params.rightMargin;
     }
 
     /**
