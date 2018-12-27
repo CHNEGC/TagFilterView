@@ -12,9 +12,12 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.cn.tag.flter.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -488,12 +491,12 @@ public class TagFilterLabelView extends ViewGroup {
         //计算tag的宽高
         if (!isAdaptive) {
             if (tagWidth == 0) {
-                int parentPadding = 0;
-                if (null != getParent()) {
-                    ViewGroup viewGroup = (ViewGroup) getParent();
-                    parentPadding = viewGroup.getPaddingLeft() + viewGroup.getPaddingRight();
-                }
-                tagWidth = ((getScreenWidth() - parentPadding - getPaddingRight() - getPaddingLeft() - (horizontalSpacing * 3)) / maxColumn);
+//                int parentPadding = 0;
+//                if (null != getParent()) {
+//                    ViewGroup viewGroup = (ViewGroup) getParent();
+//                    parentPadding = viewGroup.getPaddingLeft() + viewGroup.getPaddingRight();
+//                }
+                tagWidth = (getWidth() - getPaddingRight() - getPaddingLeft() - (horizontalSpacing * (maxColumn - 1))) / maxColumn;
             }
             if (tagHeight == 0) {
                 tagHeight = dip2px(32);
@@ -515,8 +518,18 @@ public class TagFilterLabelView extends ViewGroup {
      * @param mSelectedTag
      * @param mSelectTags
      */
-    public void onCreateTag(String[] tags, int mSelectIndex, List<Integer> mSelectIndexs, String mSelectedTag, List<String> mSelectTags) {
+    public void onCreateTag(final String[] tags, final int mSelectIndex, final List<Integer> mSelectIndexs, final String mSelectedTag, final List<String> mSelectTags) {
 
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                onCreateView(tags, mSelectIndex, mSelectIndexs, mSelectedTag, mSelectTags);
+            }
+        });
+    }
+
+    private void onCreateView(String[] tags, int mSelectIndex, List<Integer> mSelectIndexs, String mSelectedTag, List<String> mSelectTags) {
         //计算Tag的宽高度
         setTagWhSize();
 
@@ -613,8 +626,17 @@ public class TagFilterLabelView extends ViewGroup {
         }
     }
 
-    public void onCreateTag(List<String> tags, int mSelectIndex, List<Integer> mSelectIndexs, String mSelectedTag, List<String> mSelectTags) {
+    public void onCreateTag(final List<String> tags, final int mSelectIndex, final List<Integer> mSelectIndexs, final String mSelectedTag, final List<String> mSelectTags) {
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                onCreateView(tags, mSelectIndex, mSelectIndexs, mSelectedTag, mSelectTags);
+            }
+        });
+    }
 
+    private void onCreateView(List<String> tags, int mSelectIndex, List<Integer> mSelectIndexs, String mSelectedTag, List<String> mSelectTags) {
         //计算Tag的宽高度
         setTagWhSize();
 
